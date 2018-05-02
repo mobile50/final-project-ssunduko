@@ -20,18 +20,6 @@ export default class MyBooks extends React.Component {
       this.getBooks();
   };
 
-  /*getBooks(){
-    AsyncStorage.getItem('books').then((value) => {
-          fetch(`https://www.googleapis.com/books/v1/volumes?q=Testing`)
-            .then(r => r.json())
-            .then((r) => {
-            this.setState({
-                bookSource: this.state.bookSource.cloneWithRows(r.items),
-            });
-      })
-    });
-  }*/
-
   getBooks(){
     AsyncStorage.getItem('books').then((value) => {
       if(value != undefined){

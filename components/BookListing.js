@@ -3,7 +3,22 @@ import {
     AppRegistry, StyleSheet, Text, View, Button, TextInput, TouchableOpacity, TouchableHighlight, Image,
     AsyncStorage
 } from 'react-native';
+import { connect } from 'react-redux';
+import {store} from "../redux/redux";
 import StarRating from 'react-native-star-rating';
+import { setBookReview } from './../redux/redux';
+
+const mapStateToProps = (state) => {
+  return {
+    bookReview: state.bookReview,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setBookReview: (text) => { dispatch(setBookReview(text)) },
+  };
+};
 
 export default class BookListing extends React.Component {
 
@@ -19,6 +34,8 @@ export default class BookListing extends React.Component {
     });
 
     componentWillMount(){
+
+        const {store} = this.props;
         this.getBooks()
     };
 
@@ -75,32 +92,35 @@ export default class BookListing extends React.Component {
     const {navigate} = this.props.navigation;
 
     return (
-      <View style={styles.container}>
-        <Image style={styles.image}
-               source={{uri: this.state.book.volumeInfo.imageLinks.thumbnail}}
-        />
-        <View>
-            <Text style={styles.title}>{this.state.book.volumeInfo.title}({this.state.book.volumeInfo.publishedDate})</Text>
-        </View>
-        <View>
-            <Text style={styles.bookInfo}>Rating: {this.state.book.volumeInfo.averageRating}</Text>
-            <Text style={styles.bookInfo}> Ratings Count: {this.state.book.volumeInfo.ratingsCount}</Text>
-        </View>
-        <StarRating
-            disabled={false}
-            maxStars={5}
-            rating={this.state.starCount}
-            selectedStar={(rating) => this.onStarRatingPress(rating)}>
-        </StarRating>
-        <TouchableHighlight
-            style={styles.button}
-            onPress={this.onSubmit.bind(this)}>
-            <Text style={styles.text}>Add Review</Text>
-        </TouchableHighlight>
-      </View>
+          <View style={styles.container}>
+            <Image style={styles.image}
+                   source={{uri: this.state.book.volumeInfo.imageLinks.thumbnail}}
+            />
+            <View>
+                <Text style={styles.title}>{this.state.book.volumeInfo.title}({this.state.book.volumeInfo.publishedDate})</Text>
+            </View>
+            <View>
+                <Text style={styles.bookInfo}>Rating: {this.state.book.volumeInfo.averageRating}</Text>
+                <Text style={styles.bookInfo}> Ratings Count: {this.state.book.volumeInfo.ratingsCount}</Text>
+            </View>
+            <StarRating
+                disabled={false}
+                maxStars={5}
+                rating={this.state.starCount}
+                selectedStar={(rating) => this.onStarRatingPress(rating)}>
+            </StarRating>
+            <TouchableHighlight
+                style={styles.button}
+                onPress={this.onSubmit.bind(this)}>
+                <Text style={styles.text}>Add Review</Text>
+            </TouchableHighlight>
+          </View>
     );
   }
 }
+
+//export default connect(mapStateToProps, mapDispatchToProps)(BookListing);
+
 
 const styles = StyleSheet.create({
 

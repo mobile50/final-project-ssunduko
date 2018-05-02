@@ -2,11 +2,13 @@ import React from 'react';
 import {AppRegistry, FlatList, TouchableOpacity, Dimensions, StyleSheet, Text,
     TextInput, ListView, View, TouchableHighlight, Image } from 'react-native';
 import { StackNavigator, TabNavigator } from "react-navigation";
+import {Provider} from 'react-redux'
+import {store} from "./redux/redux";
 
 import BookListing from './components/BookListing'
 import MyBooks from './components/MyBooks'
 
-class BookSearch extends React.Component {
+class App extends React.Component {
 
   static navigationOptions = {
     headerStyle: {
@@ -34,15 +36,15 @@ class BookSearch extends React.Component {
   renderBooks(book){
     const { navigate } = this.props.navigation;
     return(
-      <TouchableHighlight onPress={()=> navigate('BookListing',{book})}>
-        <View style={styles.row}>
-          <View style={styles.bookInfo}>
-            <Text style={styles.title}>
-                {book.volumeInfo.title}
-            </Text>
-          </View>
-        </View>
-      </TouchableHighlight>
+          <TouchableHighlight onPress={()=> navigate('BookListing',{book})}>
+            <View style={styles.row}>
+              <View style={styles.bookInfo}>
+                <Text style={styles.title}>
+                    {book.volumeInfo.title}
+                </Text>
+              </View>
+            </View>
+          </TouchableHighlight>
     )
   };
 
@@ -59,17 +61,19 @@ class BookSearch extends React.Component {
   render() {
     const { navigate } = this.props.navigation;
     return (
-      <View style={styles.container}>
-        <TextInput style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-              placeholder="Search Books ..."
-              onChangeText={(text) => this.getBooks(text)}
-              value={this.state.text}
-        />
-        <ListView
-          dataSource = {this.state.bookSource}
-          renderRow = {this.renderBooks}
-        />
-      </View>
+        <Provider store={store}>
+          <View style={styles.container}>
+            <TextInput style={{height: 40, borderColor: 'gray', borderWidth: 1}}
+                  placeholder="Search Books ..."
+                  onChangeText={(text) => this.getBooks(text)}
+                  value={this.state.text}
+            />
+            <ListView
+              dataSource = {this.state.bookSource}
+              renderRow = {this.renderBooks}
+            />
+          </View>
+        </Provider>
     );
   }
 }
@@ -101,7 +105,7 @@ const styles = StyleSheet.create({
 
 
 const HomeStack = StackNavigator({
-  Search: { screen: BookSearch },
+  Search: { screen: App },
   BookListing: { screen: BookListing },
 });
 
@@ -127,3 +131,5 @@ export default TabNavigator({
      }
    }
 );
+
+AppRegistry.registerComponent('App', () => App);
