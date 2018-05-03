@@ -10,7 +10,7 @@ import {setBookReview} from './../redux/redux';
 const mapStateToProps = (state) => {
     console.log("test BookListing mapStateToProps");
     return {
-        bookReview: state.bookReview,
+        review: state.review,
     };
 };
 
@@ -22,6 +22,7 @@ const mapDispatchToProps = (dispatch) => {
         },
     };
 };
+
 
 class BookListing extends React.Component {
 
@@ -83,12 +84,12 @@ class BookListing extends React.Component {
 
         let books = this.state.books;
         console.log(books);
-        books.push({
-            // review: this.props.setBookReview("This is a new review for Sergey"),
-            review: "This is a new review for Sergey",
-            title: this.state.book.volumeInfo.title,
-            starCount: this.state.starCount
-        });
+
+        this.props.setBookReview("Changing Review");
+
+        let book = {review: this.state.review, title: this.state.book.volumeInfo.title, starCount: this.state.starCount };
+
+        books.push(book);
 
         AsyncStorage.setItem('books', JSON.stringify(books));
 
