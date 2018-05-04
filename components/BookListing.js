@@ -5,7 +5,7 @@ import {
 } from 'react-native';
 import {connect} from 'react-redux';
 import StarRating from 'react-native-star-rating';
-import {setBookReview} from '../redux/all-redux';
+import {setBookReview} from 'all-redux'
 
 const mapStateToProps = (state) => {
     console.log("test BookListing mapStateToProps");
