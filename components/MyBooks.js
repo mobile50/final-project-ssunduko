@@ -20,10 +20,8 @@ export default class MyBooks extends React.Component {
         headerTitleStyle: {
             color: '#212121'
         },
-    };
 
-    componentWillMount() {
-        // this.getBooks()
+        title: 'MyBooks'
     };
 
     componentDidMount() {
@@ -43,16 +41,6 @@ export default class MyBooks extends React.Component {
                 this.setState({
                     bookSource: this.state.bookSource.cloneWithRows(books)
                 });
-            } else {
-
-                fetch(`https://www.googleapis.com/books/v1/volumes?q=Testing`)
-                    .then(r => r.json())
-                    .then((r) => {
-                        this.setState({
-                            bookSource: this.state.bookSource.cloneWithRows(r.items),
-                        });
-                    })
-                    .catch(err => console.log('Error:', err));
             }
         });
     }
@@ -66,8 +54,7 @@ export default class MyBooks extends React.Component {
                         <Text style={styles.title}>
                             {book.title}
                         </Text>
-                        <Text style={styles.bookInfo}>Rating: {book.starCount}</Text>
-                        <Text style={styles.bookInfo}>Review: {book.review}</Text>
+                        <Text style={styles.rating}>You rated this book: {book.starCount}</Text>
                     </View>
                 </View>
             </TouchableHighlight>
@@ -116,8 +103,8 @@ const styles = StyleSheet.create({
         fontSize: 18
     },
 
-    image: {
-        width: 70,
-        height: 70
+    rating: {
+        color: '#ffffff',
+        fontSize: 12
     }
 });

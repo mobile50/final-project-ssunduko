@@ -10,6 +10,17 @@ import {
 
 class MainView extends React.Component {
 
+    static navigationOptions = {
+        headerStyle: {
+            backgroundColor: '#fff'
+        },
+        headerTitleStyle: {
+            color: '#212121'
+        },
+
+        title: 'Search'
+    };
+
     getBooks(searchString){
 
         fetch(`https://www.googleapis.com/books/v1/volumes?q=${searchString}`)
@@ -46,8 +57,6 @@ class MainView extends React.Component {
 
         this.state = {
             bookSource: dataSource,
-            // store:  store
-
         };
         this.renderBooks = this.renderBooks.bind(this);
     }

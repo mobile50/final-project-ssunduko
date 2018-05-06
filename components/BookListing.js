@@ -5,17 +5,15 @@ import {
 } from 'react-native';
 import {connect} from 'react-redux';
 import StarRating from 'react-native-star-rating';
-import {setBookReview} from 'all-redux'
+import {setBookReview} from './../redux/app-redux'
 
 const mapStateToProps = (state) => {
-    console.log("test BookListing mapStateToProps");
     return {
         review: state.review,
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
-    console.log("test BookListing mapDispatchToProps");
     return {
         setBookReview: (text) => {
             dispatch(setBookReview(text))
@@ -35,6 +33,8 @@ class BookListing extends React.Component {
             color: '#212121'
         },
 
+        title: 'Search'
+
     });
 
     componentWillMount() {
@@ -50,8 +50,6 @@ class BookListing extends React.Component {
         AsyncStorage.getItem('books').then((value) => {
             if (value) {
                 this.setState({books: JSON.parse(value)});
-                console.log("I've got books!!!\n\n\n");
-                console.log(value);
             }
         });
     }
@@ -65,7 +63,6 @@ class BookListing extends React.Component {
             book: this.props.navigation.state.params.book,
             title: '',
             starCount: 0,
-            review: 'This is a sample review',
             books: []
         };
     };
@@ -85,11 +82,17 @@ class BookListing extends React.Component {
         let books = this.state.books;
         console.log(books);
 
-        this.props.setBookReview("Changing Review");
-
         let book = {review: this.state.review, title: this.state.book.volumeInfo.title, starCount: this.state.starCount };
 
-        books.push(book);
+        const index = books.findIndex( localBook => localBook.title === this.state.book.volumeInfo.title);
+        if (index > - 1) {
+            let temp = books[index];
+            temp.starCount = this.state.starCount;
+
+            books[index] = temp
+        } else {
+            books.push(book);
+        }
 
         AsyncStorage.setItem('books', JSON.stringify(books));
 
@@ -111,7 +114,7 @@ class BookListing extends React.Component {
                 </View>
                 <View>
                     <Text style={styles.bookInfo}>Rating: {this.state.book.volumeInfo.averageRating}</Text>
-                    <Text style={styles.bookInfo}> Ratings Count: {this.state.book.volumeInfo.ratingsCount}</Text>
+                    <Text style={styles.bookInfo}>Ratings Count: {this.state.book.volumeInfo.ratingsCount}</Text>
                 </View>
                 <StarRating
                     disabled={false}
@@ -122,7 +125,7 @@ class BookListing extends React.Component {
                 <TouchableHighlight
                     style={styles.button}
                     onPress={this.onSubmit.bind(this)}>
-                    <Text style={styles.text}>Add Review</Text>
+                    <Text style={styles.text}>Add Rating</Text>
                 </TouchableHighlight>
             </View>
         );

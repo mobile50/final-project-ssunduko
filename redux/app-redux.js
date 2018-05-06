@@ -5,7 +5,7 @@ import {
     createReduxBoundAddListener,
 } from 'react-navigation-redux-helpers';
 
-import { AppNavigator } from './AppNavigator';
+import { AppNavigator } from './../AppNavigator';
 
 
 //

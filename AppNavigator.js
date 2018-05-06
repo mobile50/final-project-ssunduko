@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {StackNavigator, TabNavigator, addNavigationHelpers} from "react-navigation";
 
-import {addListener} from "./all-redux";
+import {addListener} from "./redux/app-redux";
 
 import MyBooks from "./components/MyBooks";
 import BookListing from "./components/BookListing";

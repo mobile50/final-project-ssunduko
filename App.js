@@ -1,7 +1,7 @@
 import React from 'react';
 import {AppRegistry} from 'react-native';
 import {Provider} from 'react-redux'
-import {configureStore} from "./all-redux";
+import {configureStore, persistor} from "./redux/app-redux";
 
 import AppWithNavigationState from './AppNavigator';
 
