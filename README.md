@@ -20,4 +20,6 @@ In addition this project is utilizing AsyncStorage to store book rating between 
 rate any book. If book is already rated rating will be updated to the new rating
 
 ## Additional Note
-Application is still utilizing ListView as opposed to FlatList because FlatList does not support data source refresh 
+Application is still utilizing ListView as opposed to FlatList because FlatList does not support data source refresh
+
+ 
